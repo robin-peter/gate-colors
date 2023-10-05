@@ -1,0 +1,25 @@
+{
+  "name": "gate-colors",
+  "displayName": "GATE Colors",
+  "description": "Syntax highlighting for GATE macros",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.83.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "gate",
+      "aliases": ["GATE", "gate"],
+      "extensions": [".mac"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "gate",
+      "scopeName": "source.mac",
+      "path": "./syntaxes/gate.tmLanguage.json"
+    }]
+  }
+}
