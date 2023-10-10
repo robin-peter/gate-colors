@@ -3,30 +3,333 @@
 	"name": "GATE",
 	"patterns": [
 		{
-			"include": "#keywords"
+			"begin": "#",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.comment.gate"
+				}
+			},
+			"end": "\\n",
+			"name": "comment.line.number-sign.gate"
 		},
+
+		{"include": "#constants"},
+		{"include": "#keywords"},
+		{"include": "#gate_builtins"},
+		{"include": "#user_volumes"},
+		{"include": "#volumes"},
+		{"include": "#hacky_fixes"},
+		{"include": "#functions"},
+		{"include": "#materials"},
+
 		{
-			"include": "#strings"
+			"comment": "file names",
+			"match":"\\b(setMaterialDatabase\\s{1,}|setFileName\\s{1,}|execute\\s{1,}|loop\\s{1,}|macroPath\\s{1,}|foreach\\s{1,})\\K\\S+",
+			"name":"string.unquoted.filename.gate"
 		}
+
 	],
 	"repository": {
+		"constants": {
+			"patterns": [
+				{
+					"match": "\\b(?i:(0x\\h*)L)",
+					"name": "constant.numeric.integer.long.hexadecimal.gate"
+				},
+		
+				{
+					"match": "\\b(?i:(0x\\h*))",
+					"name": "constant.numeric.integer.hexadecimal.gate"
+				},
+				{
+					"match": "\\b(?i:(0o?[0-7]+)L)",
+					"name": "constant.numeric.integer.long.octal.gate"
+				},
+				{
+					"match": "\\b(?i:(0o?[0-7]+))",
+					"name": "constant.numeric.integer.octal.gate"
+				},
+				{
+					"match": "\\b(?i:(0b[01]+)L)",
+					"name": "constant.numeric.integer.long.binary.gate"
+				},
+				{
+					"match": "\\b(?i:(0b[01]+))",
+					"name": "constant.numeric.integer.binary.gate"
+				},
+				{
+					"match": "\\b(?i:(((\\d+(\\.(?=[^a-zA-Z_])\\d*)?|(?<=[^0-9a-zA-Z_])\\.\\d+)(e[\\-\\+]?\\d+)?))J)",
+					"name": "constant.numeric.complex.gate"
+				},
+				{
+					"match": "\\b(?i:(\\d+\\.\\d*(e[\\-\\+]?\\d+)?))(?=[^a-zA-Z_])",
+					"name": "constant.numeric.float.gate"
+				},
+				{
+					"match": "(?<=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))",
+					"name": "constant.numeric.float.gate"
+				},
+				{
+					"match": "\\b(?i:(\\d+e[\\-\\+]?\\d+))",
+					"name": "constant.numeric.float.gate"
+				},
+				{
+					"match": "\\b(?i:([1-9]+[0-9]*|0)L)",
+					"name": "constant.numeric.integer.long.decimal.gate"
+				},
+				{
+					"match": "\\b([1-9]+[0-9]*|0)",
+					"name": "constant.numeric.integer.decimal.gate"
+				},
+		
+				{
+					"match": "\\b(meter\/s|centimeter\/s|millimeter\/s|meter\/min|centimeter\/min|millimeter\/min|meter\/h|centimeter\/h|millimeter\/h)\\b",
+					"name": "constant.language.speed.gate"
+				},
+				{
+					"match": "\\b(m\/s|cm\/s|mm\/s|m\/min|cm\/min|mm\/min|m\/h|cm\/h|mm\/h)\\b",
+					"name": "constant.language.time.gate"
+				},
+		
+				{
+					"match": "\\b(radian\/s|degree\/s|rotation\/s|radian\/min|degree\/min|rotation\/min|radian\/h|degree\/h|rotation\/h)\\b",
+					"name": "constant.language.angspeed.gate"
+				},
+				{
+					"match": "\\b(rad\/s|deg\/s|rot\/s|rad\/min|deg\/min|rot\/min|rad\/h|deg\/h|rot\/h)\\b",
+					"name": "constant.language.angspeed.gate"
+				},
+		
+				{
+					"match": "\\b(g\/cm3|mg\/cm3|kg\/m3)\\b",
+					"name": "constant.language.volmass.gate"
+				},
+		
+				{
+					"match": "\\b(parsec|kilometer|meter|centimeter|millimeter|micrometer|nanometer|angstrom)\\b",
+					"name": "constant.language.length.gate"
+				},
+				{
+					"match": "\\b(pc|km|m|cm|mm|mum|um|nm|Ang)\\b",
+					"name": "constant.language.length.gate"
+				},
+		
+				{
+					"match": "\\b(kilometer2|meter2|centimeter2|millimeter2)\\b",
+					"name": "constant.language.surface.gate"
+				},
+				{
+					"match": "\\b(km2|m2|cm2|mm2)\\b",
+					"name": "constant.language.surface.gate"
+				},
+		
+				{
+					"match": "\\b(kilometer3|meter33|centimeter3|millimeter3)\\b",
+					"name": "constant.language.volume.gate"
+				},
+				{
+					"match": "\\b(km3|m3|cm3|mm3)\\b",
+					"name": "constant.language.volume.gate"
+				},
+		
+				{
+					"match": "\\b(radian|milliradian|steradian|degre)\\b",
+					"name": "constant.language.angle.gate"
+				},
+				{
+					"match": "\\b(rad|mrad|sr|deg)\\b",
+					"name": "constant.language.angle.gate"
+				},
+		
+				{
+					"match": "\\b(second|millisecond|microsecond|nanosecond|picosecond)\\b",
+					"name": "constant.language.time.gate"
+				},
+				{
+					"match": "\\b(s|ms|mus|ns|ps)\\b",
+					"name": "constant.language.time.gate"
+				},
+		
+				{
+					"match": "\\b(electronvolt|kiloelectronvolt|megaelectronvolt|gigaelectronvolt|teraelectronvolt|petaelectronvolt|joule)\\b",
+					"name": "constant.language.energy.gate"
+				},
+				{
+					"match": "\\b(eV|keV|MeV|GeV|TeV|PeV|j)\\b",
+					"name": "constant.language.energy.gate"
+				},
+		
+				{
+					"match": "\\b(becquerel|curie|gray)\\b",
+					"name": "constant.language.activitydose.gate"
+				},
+				{
+					"match": "\\b(Bq|Ci|Gy)\\b",
+					"name": "constant.language.activitydose.gate"
+				},
+		
+				{
+					"match": "\\b(mole|mol)\\b",
+					"name": "constant.language.substance.gate"
+				},
+				
+				{
+					"match": "\\b(milligram|mg|kilogram|kg)\\b",
+					"name": "constant.language.mass.gate"
+				},
+		
+				{
+					"match": "\\b(eplus|coulomb|C)\\b",
+					"name": "constant.language.charge.gate"
+				},
+				{
+					"match": "(e\\+)",
+					"name": "constant.language.charge.gate"
+				},
+		
+				{
+					"match": "\\b(ampere|A|milliampere|mA|microampere|muA|nanoampere|nA)\\b",
+					"name": "constant.language.current.gate"
+				},
+		
+				{
+					"match": "\\b(volt|V|kilovolt|kV|megavolt|MV)\\b",
+					"name": "constant.language.potential.gate"
+				},
+		
+				{
+					"match": "\\b(weber|Wb|tesla|T|gauss|G|kilogauss|kG)\\b",
+					"name": "constant.language.magflux.gate"
+				},
+		
+				{
+					"match": "\\b(K)\\b",
+					"name": "constant.language.temperature.gate"
+				},
+		
+				{
+					"match": "\\b(newton|N|pascal|Pa|bar|atmosphere|atm)\\b",
+					"name": "constant.language.pressure.gate"
+				},
+		
+				{
+					"match": "\\b(watt|W)\\b",
+					"name": "constant.language.power.gate"
+				},
+		
+				{
+					"match": "\\b(hertz|Hz|kilohertz|kHz|megahertz|MHz)\\b",
+					"name": "constant.language.frequency.gate"
+				},
+		
+				{
+					"match": "\\b(true|True|false|False)\\b",
+					"name": "constant.language.boolean.gate"
+				}
+			]
+		},
+
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.gate",
-				"match": "\\b(if|while|for|return)\\b"
+				"match": "\\b(enable|disable|start|exit|initialize)\\b"
 			}]
 		},
-		"strings": {
-			"name": "string.quoted.double.gate",
-			"begin": "\"",
-			"end": "\"",
+		"gate_builtins": {
 			"patterns": [
 				{
-					"name": "constant.character.escape.gate",
-					"match": "\\\\."
+					"name": "support.function.builtin.gate",
+					"match": "\\b(actor|physics|random|run|geometry|HounsfieldMaterialGenerator)"
+				},
+				{
+					"name": "support.function.builtin.gate",
+					"match": "\\b(systems|distributions|world|timing|RTPhantom|stepping|generator)"
+				},
+				{
+					"name": "support.function.builtin.gate",
+					"match": "\\b(output|digitizer|source|application|control)"
 				}
 			]
+		},
+
+		"volumes":{
+			"patterns": [
+				{
+					"match": "\\b(box|sphere|cylinder|ellipsoid|cone|eltub|hexagone|polycone|trap|trpd|wedge|tessellated|TetMeshBox)\\b",
+					"name": "constant.language.volumeshape.gate"
+				}
+			]
+		},
+
+		"materials":{
+			"patterns": [
+				{
+					"match": "\\b(Hydrogen|Helium|Lithium|Beryllium|Boron|Carbon|Nitrogen|Oxygen|Fluorine|Neon|Sodium)\\b",
+					"name": "constant.language.material.element.gate"
+				},
+				{
+					"match": "\\b(Magnesium|Aluminium|Silicon|Phosphor|Sulfur|Chlorine|Argon|Potassium|Calcium|Scandium|Titanium)\\b",
+					"name": "constant.language.material.element.gate"
+				},
+				{
+					"match": "\\b(Vandium|Chromium|Manganese|Iron|Cobalt|Nickel|Copper|Zinc|Gallium|Germanium|Yttrium|Silver|Cadmium)\\b",
+					"name": "constant.language.material.element.gate"
+				},
+				{
+					"match": "\\b(Tin|Tellurium|Iodine|Cesium|Gadolinium|Lutetium|Tungsten|Gold|Thallium|Lead|Bismuth|Uranium)\\b",
+					"name": "constant.language.material.element.gate"
+				},
+				{
+					"match": "\\b(Tin|Tellurium|Iodine|Cesium|Gadolinium|Lutetium|Tungsten|Gold|Thallium|Lead|Bismuth|Uranium)\\b",
+					"name": "constant.language.material.element.gate"
+				},
+				{
+					"match": "\\b(Vacuum|AluminiumEGS|NaI|PWO|BGO|LSO|Plexiglass|GSO|LuAP|YAP|Water|Quartz|Breast|Air|Glass)\\b",
+					"name": "constant.language.material.compound.gate"
+				},
+				{
+					"match": "\\b(Plastic|Biomimic|FITC|RhB|CZT|Lung|Polyethylene|PTFE|LYSO|Body|Muscle|LungMoby|SpineBone|RibBone)\\b",
+					"name": "constant.language.material.compound.gate"
+				},
+				{
+					"match": "\\b(Adipose|Epidermis|Hypodermis|Blood|Heart|Kidney|Liver|Lymph|Pancreas|Intestine|Skull|Cartilage)\\b",
+					"name": "constant.language.material.compound.gate"
+				},
+				{
+					"match": "\\b(GreyMatter|Caudate|Putamen|WhiteMatter|Spleen|Testis|PMMA|Epoxy|Carbide)\\b",
+					"name": "constant.language.material.compound.gate"
+				},
+				{
+					"match": "\\b(PVC|SS304|Scinti\\-C9H10|LuYAP\\-70|LuYAP\\-80)\\b",
+					"name": "constant.language.material.compound.gate"
+				}
+			]										
+
+		},
+
+		"functions":{
+			"name": "support.class.builtin.gate",
+			"match": "\\b(insert|name|attach|addSource)\\b",
+			"captures": {"0":  { "patterns":[{ "include": "#hacky_fixes"} ] } }
+		},
+
+		"user_volumes": {
+			"name": "variable.volume.gate",
+			"match": "(?:^\\/gate\\/)\\K(\\w+)",
+			"captures": {"0":  { "patterns":[{ "include": "#gate_builtins"} ] } }
+			},
+
+		"hacky_fixes":{
+			"comment": "would be better done using semantic highlighting",
+			"match":"\\s+\\w+",
+			"name":"variable.parameter.gate",
+			"captures": {"0":  { "patterns":[
+				{ "include": "#constants"},
+				{ "include": "#volumes"},
+				{ "include": "#materials"}] } }
 		}
+
+
 	},
 	"scopeName": "source.mac"
 }
