@@ -19,7 +19,7 @@ GATE is a wrapper of the popular Monte Carlo simulation code GEANT4 that uses pr
     - High-level flow keywords (```initialize```, ```disable```, ```start```)
 - Additionally, supports line- and multi-line commenting with VSCode's comment keybind.
 
-\!\[screenshot of syntax color on example .mac file\]\(demo.png\)
+![screenshot of syntax color on example .mac file](demo.png)
 
 <!-- ## Requirements
 
