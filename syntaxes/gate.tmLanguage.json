@@ -24,7 +24,7 @@
 
 		{
 			"comment": "file names",
-			"match":"\\b(setMaterialDatabase\\s{1,}|setFileName\\s{1,}|execute\\s{1,}|loop\\s{1,}|macroPath\\s{1,}|foreach\\s{1,})\\K\\S+",
+			"match":"\\b(setMaterialDatabase\\s{1,}|setFileName\\s{1,}|execute\\s{1,}|loop\\s{1,}|macroPath\\s{1,}|foreach\\s{1,}|save\\s{1,})\\K\\S+",
 			"name":"string.unquoted.filename.gate"
 		}
 
