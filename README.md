@@ -40,9 +40,9 @@ This extension contributes the following settings:
 Please refer to ```vsc-extension-quickstart.md``` for detailed instructions.
 
 To install locally:
-- (**Untested**) Download / clone this repository into the `<user home>/.vscode/extensions` folder and restart Code.
+- Download / clone this repository into the `<user home>/.vscode/extensions` folder and restart Code.
 
-To debug or test:
+To debug or test without installing:
 - Download / clone this repository and open in VSCode.
 - Press `F5` to open a new window with your extension loaded.
 - `.mac` files opened in the new window will have the syntax highlighting applied.
